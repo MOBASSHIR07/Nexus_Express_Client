@@ -65,7 +65,7 @@ const DeliveryLoader = () => {
       </div>
 
       {/* Keyframes */}
-      <style jsx>{`
+      <style jsx="true">{`
         @keyframes truckMove {
           0% {
             transform: translateX(-20px);

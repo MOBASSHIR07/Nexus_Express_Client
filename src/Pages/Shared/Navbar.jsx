@@ -30,6 +30,18 @@ const Navbar = () => {
     </li>
     <li>
       <NavLink
+        to="/sendParcel"
+        className={({ isActive }) =>
+          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${
+            isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          }`
+        }
+      >
+        Send a Parcel
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
         to="/about"
         className={({ isActive }) =>
           `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${

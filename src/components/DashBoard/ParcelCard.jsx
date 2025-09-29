@@ -1,7 +1,7 @@
 import React from "react";
 import { FaEdit, FaEye, FaTimes } from 'react-icons/fa';
 
-const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack }) => {
+const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
   const getStatusColor = (status) => {
     switch (status) {
       case "Delivered": return "bg-green-100 text-green-800";
@@ -10,6 +10,12 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack }) => {
       default: return "bg-gray-100 text-gray-800";
     }
   };
+
+  const handlePay = (id) => {
+
+    onPay(id);
+
+  }
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-[#9ACD32] transition-all duration-200 shadow-sm hover:shadow-md relative">
@@ -112,6 +118,18 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack }) => {
           >
             <FaEye className="w-5 h-5" />
           </button>
+          <button
+            onClick={() => handlePay(parcel._id)}
+            disabled={parcel.payment_status === "paid"}
+            className={`px-3 py-1 rounded transition-colors duration-200 ${parcel.payment_status === "paid"
+                ? "bg-gray-400 cursor-not-allowed text-gray-200"
+                : "bg-green-500 text-white hover:bg-green-600"
+              }`}
+            title={parcel.payment_status === "paid" ? "Already Paid" : "Pay Now"}
+          >
+            {parcel.payment_status === "paid" ? "Paid" : "Pay"}
+          </button>
+
         </div>
       </div>
     </div>

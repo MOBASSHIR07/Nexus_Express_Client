@@ -65,7 +65,7 @@ const DashBoardLayout = () => {
 
                         <li>
                             <NavLink
-                                to="/dashboard"
+                                to="/dashboard/payment"
                                 className={({ isActive }) =>
                                     `rounded-lg font-medium ${isActive
                                         ? "bg-[#9ACD32] text-white"
@@ -78,7 +78,7 @@ const DashBoardLayout = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="/dashboard/settings"
+                                to="paymentHistory"
                                 className={({ isActive }) =>
                                     `rounded-lg font-medium ${isActive
                                         ? "bg-[#9ACD32] text-white"
@@ -86,7 +86,7 @@ const DashBoardLayout = () => {
                                     }`
                                 }
                             >
-                                ⚙️ Settings
+                               💳 Payment History
                             </NavLink>
                         </li>
                         <li>
@@ -99,7 +99,7 @@ const DashBoardLayout = () => {
                                     }`
                                 }
                             >
-                                👤 Profile
+                            🔍 Trace Parcel
                             </NavLink>
                         </li>
                     </ul>

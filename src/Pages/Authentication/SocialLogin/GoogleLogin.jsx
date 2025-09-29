@@ -1,13 +1,18 @@
 import React from 'react';
 import useAuth from '../../../Hooks/useAuth';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const GoogleLogin = () => {
     const { signInwithGoogle } = useAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.form?.pathname || '/';
 
     const googleSignIn = () => {
         signInwithGoogle()
             .then(result => {
                 console.log("✅ Google login success:", result.user);
+                  navigate(from ,{ replace: true });
                
             })
             .catch(error => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   createBrowserRouter,
+  Navigate,
 } from "react-router-dom";
 import MainLayout from '../Layout/MainLayout';
 import HomePage from '../Pages/HomePage';
@@ -12,6 +13,8 @@ import SendParcel from '../Pages/SendParcel/SendParcel';
 import PrivateRoute from './PrivateRoute';
 import DashBoardLayout from '../Layout/DashBoardLayout';
 import MyParcels from '../components/DashBoard/MyParcels';
+import Payment from '../components/DashBoard/Payment';
+import PaymentHistory from '../components/DashBoard/PaymentHistory';
 
 
 
@@ -30,11 +33,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "sendParcel",
-        element:<PrivateRoute>
+        element: <PrivateRoute>
           <SendParcel />,
         </PrivateRoute>,
         loader: async () => {
-          const res = await fetch("/service-centers.json"); 
+          const res = await fetch("/service-centers.json");
           if (!res.ok) throw new Error("Failed to load warehouse.json");
           return res.json();
         },
@@ -59,18 +62,32 @@ export const router = createBrowserRouter([
   },
   //dashboard layout
   {
-    path:'/dashboard',
-    element:<PrivateRoute>
-         <DashBoardLayout/>
-         </PrivateRoute>,
-    children:[
+    path: '/dashboard',
+    element: <PrivateRoute>
+      <DashBoardLayout />
+    </PrivateRoute>,
+    children: [
       {
-        path:'/dashboard/myParcels',
-        element:<MyParcels/>
+        index: true,
+        element: <Navigate to="/dashboard/payment" replace />
+      },
+      {
+        path: 'payment',
+        element: <MyParcels />
       }
+      ,
+      {
+        path: 'payment/:parcelId',
+        element: <Payment />
+      },
+      {
+        path: 'paymentHistory',
+        element: <PaymentHistory />
+      }
+
     ]
 
-    
+
   }
 ]);
 

@@ -1,15 +1,17 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/assets/banner/logo.png';
+import { button, p } from 'framer-motion/client';
+import useAuth from '../../Hooks/useAuth';
 
 const Navbar = () => {
+  const { user, logOut } = useAuth()
   const navOption = <>
     <li>
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `px-3 py-2 rounded-md font-semibold transition-colors  ${
-            isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          `px-3 py-2 rounded-md font-semibold transition-colors  ${isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
           }`
         }
       >
@@ -20,8 +22,7 @@ const Navbar = () => {
       <NavLink
         to="/coverage"
         className={({ isActive }) =>
-          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${
-            isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
           }`
         }
       >
@@ -32,8 +33,7 @@ const Navbar = () => {
       <NavLink
         to="/sendParcel"
         className={({ isActive }) =>
-          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${
-            isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
           }`
         }
       >
@@ -42,10 +42,20 @@ const Navbar = () => {
     </li>
     <li>
       <NavLink
+        to="/dashboard"
+        className={({ isActive }) =>
+          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          }`
+        }
+      >
+        DashBoard
+      </NavLink>
+    </li>
+    <li>
+      <NavLink
         to="/about"
         className={({ isActive }) =>
-          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${
-            isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
+          `px-3 py-2 rounded-md font-semibold transition-colors duration-300 ${isActive ? 'bg-[#9ACD32] text-white' : 'hover:bg-[#9ACD32]/70 hover:text-white'
           }`
         }
       >
@@ -87,12 +97,25 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-end flex items-center space-x-3">
-        <NavLink
-          to="/login"
-          className="px-4 py-2 rounded-md font-semibold text-gray-800 border border-gray-300 hover:bg-[#9ACD32] hover:text-white transition-colors duration-300"
-        >
-          Sign In
-        </NavLink>
+        {user ? (
+          <>
+            <p className='font-semibold'>User : <span className='text-[#9ACD32]'>{user.email}</span></p>
+            <button
+              onClick={logOut}
+              className="px-4 py-2 rounded-md font-semibold text-gray-800 border border-gray-300 hover:bg-red-500 hover:text-white transition-colors duration-300"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <NavLink
+            to="/login"
+            className="px-4 py-2 rounded-md font-semibold text-gray-800 border border-gray-300 hover:bg-[#9ACD32] hover:text-white transition-colors duration-300"
+          >
+            Sign In
+          </NavLink>
+        )}
+
         <NavLink
           to="/register"
           className="px-4 py-2 rounded-md font-semibold text-white bg-[#9ACD32] hover:bg-[#88b12a] transition-colors duration-300"

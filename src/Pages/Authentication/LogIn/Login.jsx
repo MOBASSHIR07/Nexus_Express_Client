@@ -1,16 +1,41 @@
-import React from 'react';
-import { useForm } from "react-hook-form";
-import loginBanner from '../../../assets/assets/banner/authImage.png'
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
+import useAuth from '../../../Hooks/useAuth';
+import loginBanner from '../../../assets/assets/banner/authImage.png';
+import GoogleLogin from '../SocialLogin/GoogleLogin';
 
 const Login = () => {
+  const { signIn } = useAuth(); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    setError,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const [authError, setAuthError] = useState('');
+
+  const onSubmit = async ({ email, password }) => {
+    setAuthError('');
+    try {
+      
+      await signIn(email, password);
+
+      // on success redirect to original page
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.error('Login error:', err);
+      const message = err?.message || 'Failed to login';
+      setAuthError(message);
+
+      // also attach to form field so it shows near inputs if you want:
+      setError('password', { type: 'manual', message });
+    }
   };
 
   return (
@@ -22,7 +47,7 @@ const Login = () => {
           alt="Login banner"
           className="absolute inset-0 w-full h-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="absolute inset-0 bg-black/50" />
         <div className="text-white text-center z-10 p-4">
           <h1 className="text-4xl font-bold tracking-wider drop-shadow-md">Welcome Back</h1>
           <p className="mt-4 text-lg drop-shadow-sm">Your journey to success begins here. Login to get started.</p>
@@ -45,9 +70,9 @@ const Login = () => {
                 id="email"
                 type="email"
                 placeholder="you@example.com"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Invalid email address" }
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: 'Invalid email address' }
                 })}
                 className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#085856] focus:border-transparent transition"
               />
@@ -61,32 +86,37 @@ const Login = () => {
                 id="password"
                 type="password"
                 placeholder="••••••••"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: { value: 6, message: "Password must be at least 6 characters" }
+                {...register('password', {
+                  required: 'Password is required',
+                  minLength: { value: 6, message: 'Password must be at least 6 characters' }
                 })}
                 className="w-full mt-2 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-[#085856] focus:border-transparent transition"
               />
               {errors.password && <p className="text-red-500 text-xs mt-2">{errors.password.message}</p>}
             </div>
-            
+
+            {/* Auth error */}
+            {authError && <p className="text-red-500 text-sm">{authError}</p>}
+
             <div className="text-right">
-              <a href="#" className="text-sm font-medium text-[#085856] hover:underline">Forgot password?</a>
+              <Link to="/forgot-password" className="text-sm font-medium text-[#085856] hover:underline">Forgot password?</Link>
             </div>
 
             {/* Button */}
             <button
               type="submit"
-              className="w-full bg-[#085856] text-white py-2 rounded-md font-semibold hover:bg-[#0a6c69] transition"
+              disabled={isSubmitting}
+              className={`w-full bg-[#085856] text-white py-2 rounded-md font-semibold hover:bg-[#0a6c69] transition ${isSubmitting ? 'opacity-60 cursor-not-allowed' : ''}`}
             >
-              Log In
+              {isSubmitting ? 'Logging in...' : 'Log In'}
             </button>
           </form>
 
           <p className="text-sm text-gray-500 text-center mt-6">
             Don’t have an account? {' '}
-            <a href="/register" className="text-[#085856] font-semibold hover:underline">Register</a>
+            <Link to="/register" className="text-[#085856] font-semibold hover:underline">Register</Link>
           </p>
+          <GoogleLogin/>
         </div>
       </div>
     </div>

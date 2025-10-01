@@ -28,7 +28,7 @@ const MyParcels = () => {
   const deleteMutation = useMutation({
     mutationFn: (parcelId) => axiosSecure.delete(`/parcels/${parcelId}`),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['my-parcels'] });
+     queryClient.invalidateQueries({ queryKey: ['my-parcels', user.email] });
       toast.success('📦 Parcel deleted successfully!');
     },
     onError: (err) => {

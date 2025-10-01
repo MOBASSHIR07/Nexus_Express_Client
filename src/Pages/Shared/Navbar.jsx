@@ -68,7 +68,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/about"
+          to="/beArider"
           className={({ isActive }) =>
             `px-3 py-2 rounded-md font-semibold transition-colors ${
               isActive
@@ -77,7 +77,7 @@ const Navbar = () => {
             }`
           }
         >
-          About Us
+         Be a Rider
         </NavLink>
       </li>
     </>

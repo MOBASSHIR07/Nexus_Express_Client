@@ -15,6 +15,9 @@ import DashBoardLayout from '../Layout/DashBoardLayout';
 import MyParcels from '../components/DashBoard/MyParcels';
 import Payment from '../components/DashBoard/Payment';
 import PaymentHistory from '../components/DashBoard/PaymentHistory';
+import BeARider from '../Pages/BeARider/BeARider';
+import SeePendingRiders from '../components/DashBoard/SeePendingRiders';
+import ActiveRider from '../components/DashBoard/ActiveRider';
 
 
 
@@ -41,6 +44,18 @@ export const router = createBrowserRouter([
           if (!res.ok) throw new Error("Failed to load warehouse.json");
           return res.json();
         },
+      }, {
+        path: 'beArider',
+        element:
+          <PrivateRoute>
+            <BeARider />
+          </PrivateRoute>,
+           loader: async () => {
+          const res = await fetch("/service-centers.json");
+          if (!res.ok) throw new Error("Failed to load warehouse.json");
+          return res.json();
+        },
+
       }
 
     ]
@@ -83,6 +98,14 @@ export const router = createBrowserRouter([
       {
         path: 'paymentHistory',
         element: <PaymentHistory />
+      },
+      {
+        path:'pendingRider',
+        element:<SeePendingRiders/>
+      },
+      {
+        path:'activeRider',
+        element:<ActiveRider/>
       }
 
     ]

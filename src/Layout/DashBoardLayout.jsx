@@ -1,6 +1,8 @@
 import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import logo from '../assets/assets/banner/logo.png'
+import { MdDirectionsBike } from "react-icons/md";
+import { RiEBike2Fill } from "react-icons/ri";
 
 const DashBoardLayout = () => {
     return (
@@ -87,6 +89,32 @@ const DashBoardLayout = () => {
                                 }
                             >
                                💳 Payment History
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="activeRider"
+                                className={({ isActive }) =>
+                                    `rounded-lg font-medium ${isActive
+                                        ? "bg-[#9ACD32] text-white"
+                                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                                    }`
+                                }
+                            >
+                               <RiEBike2Fill/>Active Rider
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink
+                                to="pendingRider"
+                                className={({ isActive }) =>
+                                    `rounded-lg font-medium ${isActive
+                                        ? "bg-[#9ACD32] text-white"
+                                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                                    }`
+                                }
+                            >
+                               <MdDirectionsBike/> Pending Rider
                             </NavLink>
                         </li>
                         <li>

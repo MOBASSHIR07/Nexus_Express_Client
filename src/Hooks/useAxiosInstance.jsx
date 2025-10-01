@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 const useAxiosInstance = () => {
   const {user} = useAuth();
   axiosInstance.interceptors.request.use(config=>{
-    config.headers.Authorization = `Bareer ${user.accessToken}`
+    config.headers.authorization = `Bareer ${user.accessToken}`
     return config;
   },error=>{
   return Promise.reject(error)

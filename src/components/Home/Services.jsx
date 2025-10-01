@@ -73,6 +73,7 @@ const Services = () => {
                             e.currentTarget.style.backgroundSize = '200% 200%';
                         }}
                         onMouseLeave={(e) => {
+                            const target = e.currentTarget;
                             e.currentTarget.style.backgroundSize = '0% 0%';
                             // Optional: remove background after transition ends
                             setTimeout(() => {

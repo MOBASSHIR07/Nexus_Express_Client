@@ -1,25 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import registerBanner from '../../../assets/assets/banner/authImage.png';
-import { FiUser, FiMail, FiLock } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiImage } from "react-icons/fi";
 import useAuth from '../../../Hooks/useAuth';
 import GoogleLogin from '../SocialLogin/GoogleLogin';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Register = () => {
   const { createUser } = useAuth();
   const navigate = useNavigate();
+  const [imageUrl, setImageUrl] = useState('');
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
   const password = watch("password");
+   
 
-  const onSubmit = (data) => {
-    createUser(data.email, data.password, data.name)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
-  };
+const handleImageUpload = async e =>{
+    const image = e.target.files[0];
+    const formData = new FormData();
+    formData.append('image', image)
+    console.log(image);
+    const api_url = `https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMAGE_UPLOAD_KEY}`
+    const res = await axios.post(api_url,formData)
+    console.log(res.data);
+    setImageUrl(res.data.data.url)
+    
+
+  }
+
+  const onSubmit = async (data) => {
+  try {
+    const userCredential = await createUser(data.email, data.password, data.name, imageUrl);
+    const user = userCredential.user;
+
+    const newUser = {
+      name: data.name,
+      email: data.email,
+      imageUrl: imageUrl,
+      role: "user", // default
+      createdAt: new Date().toISOString(),
+      lastLogin: new Date().toISOString(),
+    };
+
+    await axios.post("http://localhost:3000/nexus/users", newUser);
+
+    navigate("/");
+  } catch (err) {
+    console.error("Error creating user:", err);
+  }
+};
+
+
+  
 
   return (
     <div className="flex min-h-screen bg-gray-100 font-sans">
@@ -57,7 +90,22 @@ const Register = () => {
               {errors.name && <p className="text-red-500 text-xs">{errors.name.message}</p>}
             </div>
 
-            {/* Email */}
+            {/* image */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700">Image</label>
+              <div className="relative mt-2">
+                <FiImage className="absolute left-3 top-3 text-gray-400" />
+                <input onChange={handleImageUpload}
+                  type="file"
+                 
+                  placeholder="image"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md"
+                />
+              </div>
+      
+            </div>
+
+            {/* email */}
             <div>
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative mt-2">

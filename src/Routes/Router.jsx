@@ -18,6 +18,7 @@ import PaymentHistory from '../components/DashBoard/PaymentHistory';
 import BeARider from '../Pages/BeARider/BeARider';
 import SeePendingRiders from '../components/DashBoard/SeePendingRiders';
 import ActiveRider from '../components/DashBoard/ActiveRider';
+import MakeAdmin from '../components/DashBoard/MakeAdmin';
 
 
 
@@ -106,6 +107,10 @@ export const router = createBrowserRouter([
       {
         path:'activeRider',
         element:<ActiveRider/>
+      },
+      {
+        path:'makeAdmin',
+        element:<MakeAdmin/>
       }
 
     ]

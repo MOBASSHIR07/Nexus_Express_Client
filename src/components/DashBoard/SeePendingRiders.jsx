@@ -32,8 +32,8 @@ const SeePendingRiders = () => {
 
   // ✅ Mutation for updating rider status
   const { mutate: updateStatus } = useMutation({
-    mutationFn: async ({ id, status }) =>
-      await axiosSecure.patch(`/nexus/api/riders/${id}`, { status }),
+    mutationFn: async ({ id, status, rider_email }) =>
+      await axiosSecure.patch(`/nexus/api/riders/${id}`, { status ,rider_email  }),
     onSuccess: (_, { status }) => {
       Swal.fire({
         icon: "success",
@@ -97,7 +97,7 @@ const SeePendingRiders = () => {
                 </button>
                 <button
                   onClick={() =>
-                    updateStatus({ id: rider._id, status: "Active" })
+                    updateStatus({ id: rider._id, status: "Active" , rider_email:rider.email})
                   }
                   className="tooltip tooltip-top text-green-500 hover:text-green-700"
                   data-tip="Approve Rider"

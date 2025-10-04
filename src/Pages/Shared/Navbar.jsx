@@ -3,10 +3,13 @@ import { NavLink } from "react-router-dom";
 import { FiMenu, FiX } from "react-icons/fi";
 import logo from "../../assets/assets/banner/logo.png";
 import useAuth from "../../Hooks/useAuth";
+import useRole from "../../Hooks/useRole";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const {role , isLoading} = useRole();
+  console.log(role);
 
   const navOption = (
     <>

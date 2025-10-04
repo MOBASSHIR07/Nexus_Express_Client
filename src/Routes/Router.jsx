@@ -19,6 +19,8 @@ import BeARider from '../Pages/BeARider/BeARider';
 import SeePendingRiders from '../components/DashBoard/SeePendingRiders';
 import ActiveRider from '../components/DashBoard/ActiveRider';
 import MakeAdmin from '../components/DashBoard/MakeAdmin';
+import AdminRoute from './AdminRoute';
+import AssignRider from '../components/DashBoard/AssignRider';
 
 
 
@@ -102,15 +104,25 @@ export const router = createBrowserRouter([
       },
       {
         path:'pendingRider',
-        element:<SeePendingRiders/>
+        element:<AdminRoute>
+          <SeePendingRiders/>
+        </AdminRoute>
       },
       {
         path:'activeRider',
         element:<ActiveRider/>
       },
       {
+        path:'assign-rider',
+        element:<AdminRoute>
+          <AssignRider/>
+        </AdminRoute>
+      },
+      {
         path:'makeAdmin',
-        element:<MakeAdmin/>
+        element:<AdminRoute>
+          <MakeAdmin/>
+        </AdminRoute>
       }
 
     ]

@@ -32,6 +32,7 @@ const BeARider = () => {
       email: user?.email,
       date: new Date().toISOString(),
       status: "Pending", 
+      current_status:"available"
     };
 
     axiosInstance

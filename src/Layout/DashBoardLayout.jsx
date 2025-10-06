@@ -2,7 +2,7 @@ import React from "react";
 import { Outlet, NavLink } from "react-router-dom";
 import logo from "../assets/assets/banner/logo.png";
 import { MdAdminPanelSettings, MdDirectionsBike } from "react-icons/md";
-import { RiBikeLine, RiEBike2Fill, RiRidingFill, RiRidingLine } from "react-icons/ri";
+import { RiBikeLine, RiEBike2Fill, RiFile2Fill, RiPassPendingFill, RiPassPendingLine, RiRidingFill, RiRidingLine } from "react-icons/ri";
 import useRole from "../Hooks/useRole";
 
 const DashBoardLayout = () => {
@@ -148,6 +148,20 @@ const DashBoardLayout = () => {
                     }
                   >
                     <RiEBike2Fill /> Active Rider
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="pendingDelivery"
+                    className={({ isActive }) =>
+                      `rounded-lg font-medium ${
+                        isActive
+                          ? "bg-[#9ACD32] text-white"
+                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      }`
+                    }
+                  >
+                    <RiFile2Fill/> Pending Delivery
                   </NavLink>
                 </li>
                 <li>

@@ -21,6 +21,8 @@ import ActiveRider from '../components/DashBoard/ActiveRider';
 import MakeAdmin from '../components/DashBoard/MakeAdmin';
 import AdminRoute from './AdminRoute';
 import AssignRider from '../components/DashBoard/AssignRider';
+import RiderRoute from './RiderRoute';
+import PendingDelivery from '../components/DashBoard/PendingDelivery';
 
 
 
@@ -111,6 +113,10 @@ export const router = createBrowserRouter([
       {
         path:'activeRider',
         element:<ActiveRider/>
+      },
+      {
+        path:'pendingDelivery',
+        element:<RiderRoute><PendingDelivery/></RiderRoute>
       },
       {
         path:'assign-rider',

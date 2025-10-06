@@ -47,9 +47,9 @@ const AssignRider = () => {
 
   // Mutation to assign rider
   const assignRiderMutation = useMutation({
-    mutationFn: async ({ riderId, parcelId }) => {
+    mutationFn: async ({ riderId,rider_email, parcelId }) => {
       const response = await axiosSecure.put(`/parcels/assign/${parcelId}`, { 
-        deliveryman_id: riderId 
+        deliveryman_id: riderId , rider_email
       });
       return response.data;
     },
@@ -71,9 +71,9 @@ const AssignRider = () => {
     setModalOpen(true);
   };
 
-  const handleAssign = (riderId) => {
+  const handleAssign = (riderId, rider_email) => {
     if (!selectedParcel) return;
-    assignRiderMutation.mutate({ riderId, parcelId: selectedParcel._id });
+    assignRiderMutation.mutate({ riderId,rider_email, parcelId: selectedParcel._id });
   };
 
   const handleCloseModal = () => {
@@ -188,7 +188,7 @@ const AssignRider = () => {
                       </div>
                       <button
                         className="btn btn-sm btn-success"
-                        onClick={() => handleAssign(rider._id)}
+                        onClick={() => handleAssign(rider._id, rider.email)}
                         disabled={assignRiderMutation.isLoading}
                       >
                         {assignRiderMutation.isLoading ? 'Assigning...' : 'Assign'}

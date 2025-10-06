@@ -4,6 +4,7 @@ import logo from "../assets/assets/banner/logo.png";
 import { MdAdminPanelSettings, MdDirectionsBike } from "react-icons/md";
 import { RiBikeLine, RiEBike2Fill, RiFile2Fill, RiPassPendingFill, RiPassPendingLine, RiRidingFill, RiRidingLine } from "react-icons/ri";
 import useRole from "../Hooks/useRole";
+import { FiCheckCircle, FiDollarSign } from "react-icons/fi";
 
 const DashBoardLayout = () => {
   const { role, isLoading } = useRole();
@@ -92,10 +93,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="/dashboard/payment"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -106,10 +106,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="paymentHistory"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -120,10 +119,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="/dashboard/profile"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -140,10 +138,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="activeRider"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -154,24 +151,49 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="pendingDelivery"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
-                    <RiFile2Fill/> Pending Delivery
+                    <RiFile2Fill /> Pending Delivery
                   </NavLink>
                 </li>
                 <li>
                   <NavLink
+                    to="completedDelivery"
+                    className={({ isActive }) =>
+                      `rounded-lg font-medium flex items-center gap-2 px-3 py-2 ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      }`
+                    }
+                  >
+                    <FiCheckCircle /> Completed Delivery
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="myEarnings"
+                    className={({ isActive }) =>
+                      `rounded-lg font-medium flex items-center gap-2 px-3 py-2 ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      }`
+                    }
+                  >
+                    <FiDollarSign /> My Earnings
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
                     to="/dashboard/profile"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -188,10 +210,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="activeRider"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -202,10 +223,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="assign-rider"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -216,10 +236,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="pendingRider"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -230,10 +249,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="makeAdmin"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >
@@ -244,10 +262,9 @@ const DashBoardLayout = () => {
                   <NavLink
                     to="/dashboard/profile"
                     className={({ isActive }) =>
-                      `rounded-lg font-medium ${
-                        isActive
-                          ? "bg-[#9ACD32] text-white"
-                          : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
+                      `rounded-lg font-medium ${isActive
+                        ? "bg-[#9ACD32] text-white"
+                        : "text-gray-700 hover:bg-green-100 hover:text-[#9ACD32]"
                       }`
                     }
                   >

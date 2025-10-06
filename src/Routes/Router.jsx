@@ -23,6 +23,8 @@ import AdminRoute from './AdminRoute';
 import AssignRider from '../components/DashBoard/AssignRider';
 import RiderRoute from './RiderRoute';
 import PendingDelivery from '../components/DashBoard/PendingDelivery';
+import CompletedDelivery from '../components/DashBoard/CompletedDelivery';
+import MyEarnings from '../components/DashBoard/MyEarnings';
 
 
 
@@ -117,6 +119,14 @@ export const router = createBrowserRouter([
       {
         path:'pendingDelivery',
         element:<RiderRoute><PendingDelivery/></RiderRoute>
+      },
+      {
+        path:'completedDelivery',
+        element:<RiderRoute><CompletedDelivery/></RiderRoute>
+      },
+      {
+        path:'myEarnings',
+        element:<RiderRoute><MyEarnings/></RiderRoute>
       },
       {
         path:'assign-rider',

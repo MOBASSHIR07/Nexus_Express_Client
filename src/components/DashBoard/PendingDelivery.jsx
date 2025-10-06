@@ -23,9 +23,10 @@ const PendingDelivery = () => {
 
   // Update parcel status mutation
   const updateParcelMutation = useMutation({
-    mutationFn: async ({ parcelId, newStatus }) => {
+    mutationFn: async ({ parcelId, newStatus,Amount }) => {
       const res = await axiosSecure.put(`/parcels/update-status/${parcelId}`, {
         newStatus,
+        Amount
       });
       return res.data;
     },
@@ -95,6 +96,7 @@ const PendingDelivery = () => {
         await updateParcelMutation.mutateAsync({
           parcelId: parcel._id,
           newStatus: "Delivered",
+          Amount : parcel.fare
         });
         
         // Update rider status to available

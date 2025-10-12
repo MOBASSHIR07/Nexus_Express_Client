@@ -91,7 +91,7 @@ const DashBoardLayout = () => {
               <>
                 <li>
                   <NavLink
-                    to="/dashboard/payment"
+                    to="/dashboard/myparcel"
                     className={({ isActive }) =>
                       `rounded-lg font-medium ${isActive
                         ? "bg-[#9ACD32] text-white"

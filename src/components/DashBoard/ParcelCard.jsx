@@ -1,7 +1,10 @@
 import React from "react";
 import { FaEdit, FaEye, FaTimes } from 'react-icons/fa';
+import { useNavigate, Link } from 'react-router-dom';
 
-const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
+const ParcelCard = ({ parcel, onDelete, onView, onEdit, onPay }) => {
+  const navigate = useNavigate();
+
   const getStatusColor = (status) => {
     switch (status) {
       case "Delivered": return "bg-green-100 text-green-800";
@@ -11,11 +14,9 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
     }
   };
 
-  const handlePay = (id) => {
-
-    onPay(id);
-
-  }
+  const handlePay = () => {
+    onPay(parcel._id);
+  };
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-4 hover:border-[#9ACD32] transition-all duration-200 shadow-sm hover:shadow-md relative">
@@ -33,7 +34,7 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
       <div className="flex justify-between items-start mb-3">
         <div>
           <h3 className="font-bold text-gray-900 truncate text-lg">
-            Parcel Type : {parcel.type}
+            Parcel Type: {parcel.type}
           </h3>
           <p className="text-md text-gray-600 font-mono font-semibold">
             #{parcel.tracking}
@@ -70,18 +71,14 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
         </div>
         <div className="text-md">
           <span className="text-gray-600 font-semibold">Fare: </span>
-          <span
-            className={`font-bold ${parcel.payment_status === "Paid" ? "text-green-600" : "text-orange-600"}`}
-          >
-            ${parcel.fare}
+          <span className={`font-bold ${parcel.payment_status === "paid" ? "text-green-600" : "text-orange-600"}`}>
+            {parcel.fare} BDT
           </span>
         </div>
         <div className="text-md">
           <h3 className="text-gray-600 font-semibold">
             Payment :
-            <span
-              className={`ml-1 font-bold ${parcel.payment_status === "Paid" ? "text-green-600" : "text-orange-600"}`}
-            >
+            <span className={`ml-1 font-bold ${parcel.payment_status === "paid" ? "text-green-600" : "text-orange-600"}`}>
               {parcel.payment_status}
             </span>
           </h3>
@@ -90,15 +87,18 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
 
       {/* Actions */}
       <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-        <button
-          onClick={onTrack}
+        {/* Track Button using Link (nested route safe) */}
+        <Link
+          to={`/dashboard/traceParcel/${parcel._id}`}
           className="text-md text-blue-600 hover:text-blue-800 font-semibold transition-colors px-2 py-1 rounded hover:bg-blue-50"
         >
           Track
-        </button>
+        </Link>
+
+
         <h3 className="text-gray-600 font-semibold">
           Booking Date :
-          <span className="text-md text-orange-600 font-semibold">
+          <span className="text-md text-orange-600 font-semibold ml-1">
             {new Date(parcel.date).toLocaleDateString()}
           </span>
         </h3>
@@ -119,17 +119,16 @@ const ParcelCard = ({ parcel, onDelete, onView, onEdit, onTrack, onPay }) => {
             <FaEye className="w-5 h-5" />
           </button>
           <button
-            onClick={() => handlePay(parcel._id)}
+            onClick={handlePay}
             disabled={parcel.payment_status === "paid"}
             className={`px-3 py-1 rounded transition-colors duration-200 ${parcel.payment_status === "paid"
-                ? "bg-gray-400 cursor-not-allowed text-gray-200"
-                : "bg-green-500 text-white hover:bg-green-600"
+              ? "bg-gray-400 cursor-not-allowed text-gray-200"
+              : "bg-green-500 text-white hover:bg-green-600"
               }`}
             title={parcel.payment_status === "paid" ? "Already Paid" : "Pay Now"}
           >
             {parcel.payment_status === "paid" ? "Paid" : "Pay"}
           </button>
-
         </div>
       </div>
     </div>

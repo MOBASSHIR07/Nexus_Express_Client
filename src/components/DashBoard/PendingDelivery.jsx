@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
@@ -11,10 +11,11 @@ const PendingDelivery = () => {
   const axiosSecure = useAxiosInstance();
   const queryClient = useQueryClient();
 
-  // Fetch parcels
+  // Fetch parcels assigned to the rider
   const { data: parcels = [], isLoading } = useQuery({
     queryKey: ["rider-parcels", user?.email],
     queryFn: async () => {
+      if (!user?.email) return [];
       const res = await axiosSecure.get(`/parcels/pending?rider_email=${user?.email}`);
       return res.data || [];
     },
@@ -23,15 +24,15 @@ const PendingDelivery = () => {
 
   // Update parcel status mutation
   const updateParcelMutation = useMutation({
-    mutationFn: async ({ parcelId, newStatus,Amount }) => {
+    mutationFn: async ({ parcelId, newStatus, Amount }) => {
       const res = await axiosSecure.put(`/parcels/update-status/${parcelId}`, {
         newStatus,
-        Amount
+        Amount,
       });
       return res.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(["rider-parcels"]);
+      queryClient.invalidateQueries(["rider-parcels", user.email]);
       toast.success("Parcel status updated!");
     },
     onError: (error) => {
@@ -39,11 +40,11 @@ const PendingDelivery = () => {
     },
   });
 
-  // Update rider status mutation
+  // Update rider status mutation (fixed)
   const updateRiderMutation = useMutation({
-    mutationFn: async (newStatus) => {
+    mutationFn: async ({ rider_email, newStatus }) => {
       const res = await axiosSecure.put(`/riders/update-status`, {
-        rider_email: user?.email,
+        rider_email,
         newStatus,
       });
       return res.data;
@@ -65,15 +66,17 @@ const PendingDelivery = () => {
 
     if (confirm.isConfirmed) {
       try {
-        // Update parcel status
+        // Update parcel status to In-Transit
         await updateParcelMutation.mutateAsync({
           parcelId: parcel._id,
           newStatus: "In-Transit",
         });
-        
-        // Update rider status to busy
-        await updateRiderMutation.mutateAsync("in-delivery");
-        
+
+        // Update rider status to in-delivery
+        await updateRiderMutation.mutateAsync({
+          rider_email: user.email,
+          newStatus: "in-delivery",
+        });
       } catch (error) {
         console.error("Error accepting delivery:", error);
       }
@@ -92,16 +95,18 @@ const PendingDelivery = () => {
 
     if (confirm.isConfirmed) {
       try {
-        // Update parcel status
+        // Update parcel status to Delivered
         await updateParcelMutation.mutateAsync({
           parcelId: parcel._id,
           newStatus: "Delivered",
-          Amount : parcel.fare
+          Amount: parcel.fare,
         });
-        
+
         // Update rider status to available
-        await updateRiderMutation.mutateAsync("available");
-        
+        await updateRiderMutation.mutateAsync({
+          rider_email: user.email,
+          newStatus: "available",
+        });
       } catch (error) {
         console.error("Error marking as delivered:", error);
       }
@@ -115,7 +120,9 @@ const PendingDelivery = () => {
       <div className="flex flex-col items-center justify-center min-h-[70vh] text-center">
         <span className="text-6xl mb-4">📦</span>
         <h2 className="text-2xl font-semibold mb-2">No Pending Deliveries</h2>
-        <p className="text-gray-500">You have no parcels currently assigned or in-transit.</p>
+        <p className="text-gray-500">
+          You have no parcels currently assigned or in-transit.
+        </p>
       </div>
     );
   }
@@ -157,21 +164,21 @@ const PendingDelivery = () => {
                       {parcel.delivery_status}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-center">
+                  <td className="py-3 px-4 text-center space-x-2">
                     {parcel.delivery_status === "Rider-assign" && (
                       <button
                         onClick={() => handleAccept(parcel)}
-                        disabled={updateParcelMutation.isLoading}
+                        disabled={updateParcelMutation.isLoading || updateRiderMutation.isLoading}
                         className="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-lg text-sm transition disabled:opacity-50"
                       >
                         {updateParcelMutation.isLoading ? "Updating..." : "Accept"}
                       </button>
                     )}
-                    
+
                     {parcel.delivery_status === "In-Transit" && (
                       <button
                         onClick={() => handleDeliver(parcel)}
-                        disabled={updateParcelMutation.isLoading}
+                        disabled={updateParcelMutation.isLoading || updateRiderMutation.isLoading}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm transition disabled:opacity-50"
                       >
                         {updateParcelMutation.isLoading ? "Updating..." : "Delivered"}

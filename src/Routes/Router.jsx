@@ -26,6 +26,7 @@ import PendingDelivery from '../components/DashBoard/PendingDelivery';
 import CompletedDelivery from '../components/DashBoard/CompletedDelivery';
 import MyEarnings from '../components/DashBoard/MyEarnings';
 import TraceParcel from '../components/DashBoard/TraceParcel';
+import DashBoardPage from '../Pages/DashBoard/DashBoardPage';
 
 
 
@@ -92,7 +93,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="myparcel" replace />
+        element: <DashBoardPage/>
       },
       {
         path: 'myparcel',

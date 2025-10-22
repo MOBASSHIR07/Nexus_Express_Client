@@ -30,8 +30,8 @@ Nexus Express is a delivery management platform connecting customers, riders, an
 - Coverage area checking
 
 ### For Riders
-#  Gmail: rider2@gmail.com
-# Password : 123456
+#### Gmail: rider2@gmail.com
+#### Password : 123456
 - View assigned deliveries
 - Accept/reject delivery requests
 - Update delivery status
@@ -40,8 +40,8 @@ Nexus Express is a delivery management platform connecting customers, riders, an
 
 
 ### For Admins
-# Gmail: pasha@gmail.com
-# Password : 123456
+#### Gmail: pasha@gmail.com
+#### Password : 123456
 - Approve/reject rider applications
 - Assign riders to parcels
 - View analytics and system statistics
